@@ -3,7 +3,7 @@ namespace Kazan;
 
 class NoBestAndWorstStrategyTest extends \PHPUnit_Framework_TestCase
 {
-    private $strategy;
+    protected $strategy;
 
     public function setUp()
     {

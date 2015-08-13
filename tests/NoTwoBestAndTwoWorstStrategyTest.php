@@ -1,21 +1,11 @@
 <?php
 namespace Kazan;
 
-class NoTwoBestAndTwoWorstStrategyTest extends \PHPUnit_Framework_TestCase
+class NoTwoBestAndTwoWorstStrategyTest extends NoBestAndWorstStrategyTest
 {
-    private $strategy;
-
     public function setUp()
     {
         $this->strategy = new NoTwoBestAndTwoWorstStrategy();
-    }
-
-    /**
-     * @dataProvider votes
-     */
-    public function testStrategy($votes, $dive, $result)
-    {
-        $this->assertEquals($result, $this->strategy->votes($votes, $dive));
     }
 
     public function votes()
@@ -28,15 +18,6 @@ class NoTwoBestAndTwoWorstStrategyTest extends \PHPUnit_Framework_TestCase
             [[8,8,8,8,8], new Dive(2), 16], //Lowest Boundary
             [[6,8,9,8,8], new Dive(2), 16], //Lowest Boundary
         ];
-    }
-
-    /**
-     * @dataProvider wrongVoters
-     * @expectedException InvalidArgumentException
-     */
-    public function testInvalidVotersNumber($voters)
-    {
-        $this->strategy->votes($voters, new Dive(1));
     }
 
     public function wrongVoters()

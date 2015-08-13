@@ -1,22 +1,19 @@
 <?php
 namespace Kazan;
 
-class NoTwoBestAndTwoWorstStrategy implements VotingStrategy
+class NoTwoBestAndTwoWorstStrategy extends NoBestAndWorstStrategy
 {
-    public function votes(array $votes, Dive $dive)
+    public function __construct()
     {
-        if (count($votes) < 5) {
-            throw new \InvalidArgumentException("We need at least 5 votes");
-        }
+        $this->minimumVotes = 5;
+    }
 
-        unset($votes[array_search(min($votes), $votes)]);
-        unset($votes[array_search(max($votes), $votes)]);
-
-        unset($votes[array_search(min($votes), $votes)]);
-        unset($votes[array_search(max($votes), $votes)]);
-
-        $values = array_sum($votes);
-
-        return $values * $dive->getScore();
+    protected function getTheFinalSumUp($votes)
+    {
+        return array_sum(
+            $this->filterOutBestAndWorst(
+                $this->filterOutBestAndWorst($votes)
+            )
+        );
     }
 }

@@ -1,0 +1,16 @@
+{
+  "require-dev": {
+    "phpunit/phpunit": "~4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kazan\\": ["./src/"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Kazan\\": ["./tests/"]
+    }
+  }
+}
+

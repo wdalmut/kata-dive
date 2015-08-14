@@ -1,6 +1,8 @@
 <?php
 namespace Kazan;
 
+use InvalidArgumentException;
+
 final class Dive
 {
     private $score;
@@ -12,6 +14,10 @@ final class Dive
 
     private function setScore($score)
     {
+        if (!is_numeric($score)) {
+            throw new InvalidArgumentException("Only numeric values are admitted");
+        }
+
         $this->score = $score;
     }
 

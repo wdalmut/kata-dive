@@ -33,4 +33,34 @@ class VotingManagerTest extends \PHPUnit_Framework_TestCase
             [new NoTwoBestAndTwoWorstStrategy(), [8,8,6,7,8,8,8], new Dive(2.0), 48],
         ];
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @dataProvider invalidInputs
+     */
+    public function testIntegrationChainValidation($votes, $dive)
+    {
+        $strategy = $this->prophesize("Kazan\\VotingStrategy");
+        $strategy->votes(Argument::Any(), Argument::Any())->shouldNotBeCalled();
+
+        $chain = new ValidatorChain();
+        $chain->append(new IsNumericValidator());
+        $chain->append(new GreaterOrEqualThanValidator(0));
+        $chain->append(new LessOrEqualThanValidator(10));
+
+        $manager = new VotingManager($strategy->reveal(), $chain);
+
+        $manager->getTotalScoreFor($votes, $dive);
+    }
+
+    public function invalidInputs()
+    {
+        return [
+            [[8,8,8,8, -0.1], new Dive(1)],
+            [[8,8,8,8,10.1], new Dive(1)],
+            [[8,8,8,"pluto",10], new Dive(1)],
+            [[8,8,8,"pluto",-10], new Dive(1)],
+            [[8,8,8,-10,"pluto"], new Dive(1)],
+        ];
+    }
 }

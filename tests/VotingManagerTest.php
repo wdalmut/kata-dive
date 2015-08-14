@@ -17,12 +17,20 @@ class VotingManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(61.80, $manager->getTotalScoreFor([8,8,6,4], $dive));
     }
 
-    public function testRequireVotingIntegration()
+    /**
+     * @dataProvider strategyIntegrations
+     */
+    public function testRequireVotingIntegration($strategy, $votes, $dive, $result)
     {
-        $dive = new Dive(2.0);
-        $strategy = new NoBestAndWorstStrategy();
-
         $manager = new VotingManager($strategy);
-        $this->assertEquals(46, $manager->getTotalScoreFor([8,8,6,7,8], $dive));
+        $this->assertEquals($result, $manager->getTotalScoreFor($votes, $dive));
+    }
+
+    public function strategyIntegrations()
+    {
+        return [
+            [new NoBestAndWorstStrategy(), [8,8,6,7,8], new Dive(2.0), 46],
+            [new NoTwoBestAndTwoWorstStrategy(), [8,8,6,7,8,8,8], new Dive(2.0), 48],
+        ];
     }
 }

@@ -8,7 +8,7 @@ class NoTwoBestAndTwoWorstStrategy extends NoBestAndWorstStrategy
         $this->minimumVotes = 5;
     }
 
-    protected function getTheFinalSumUp($votes)
+    protected function getTheFinalSumUp(array $votes)
     {
         return array_sum(
             $this->filterOutBestAndWorst(

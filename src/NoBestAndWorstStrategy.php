@@ -21,7 +21,7 @@ class NoBestAndWorstStrategy implements VotingStrategy
         return $values * $dive->getScore();
     }
 
-    protected function getTheFinalSumUp($votes)
+    protected function getTheFinalSumUp(array $votes)
     {
         return array_sum($this->filterOutBestAndWorst($votes));
     }

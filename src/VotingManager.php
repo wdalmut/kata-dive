@@ -8,16 +8,14 @@ class VotingManager
     public function __construct(VotingStrategy $strategy, ValidatorChain $chain = null)
     {
         $this->strategy = $strategy;
-        $this->chain = $chain;
+        $this->chain = ($chain) ? $chain : new ValidatorChain();
     }
 
     public function getTotalScoreFor(array $votes, Dive $dive)
     {
-        if ($this->chain) {
-            foreach ($votes as $vote) {
-                if (($status = $this->chain->isValid($vote)) !== null) {
-                    throw new \InvalidArgumentException($status);
-                }
+        foreach ($votes as $vote) {
+            if (($status = $this->chain->isValid($vote)) !== null) {
+                throw new \InvalidArgumentException($status);
             }
         }
 

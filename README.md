@@ -12,8 +12,8 @@ $totalScore = $manager->getTotalScoreFor([8,8,6,7,8], $dive);
 
 ## Evolutions
 
-1) We have 5 voters, the best and worst votes will be removed. Sum up all
+ * We have 5 voters, the best and worst votes will be removed. Sum up all
 remaining votes and multiply by the dive score.
-2) We have also a new rule, 7 voters. Now, 2 best and 2 worst votes will be
+ * We have also a new rule, 7 voters. Now, 2 best and 2 worst votes will be
 removed then sum up all remaining votes and multiply by the dive score.
 
